@@ -1,0 +1,29 @@
+<div class="top-bar" id="realEstateMenu">
+    <div class="top-bar-left" *ngIf="user">
+        <img class="user-profile float-left" src="https://www.gravatar.com/avatar/{{user?.avatar?.gravatar?.hash}}" alt="">
+        <ul class="menu float-left">
+            <li class="menu-text">
+                <span *ngIf="user?.name">{{user?.name}}</span>
+                <span *ngIf="!user?.name">{{user?.username}}</span>
+            </li>
+        </ul>
+        <ul class="menu float-left">
+            <li class="menu-text">
+                <a [routerLink]="['/movies']" class="no-padding">Home Page</a>
+            </li>
+            <li class="menu-text" *ngIf="favorites">
+                <a [routerLink]="['/favorites']" class="no-padding">Favorite Movies</a>
+            </li>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li *ngIf="!user">
+                <login></login>
+            </li>
+            <li *ngIf="user">
+                <a href="" (click)="logout()" class="button">Logout</a>
+            </li>
+        </ul>
+    </div>
+</div>

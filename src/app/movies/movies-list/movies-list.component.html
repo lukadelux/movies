@@ -1,0 +1,49 @@
+<div class="row gutter-small">
+    <div class="columns small-12 large-4">
+        <label>Sort by
+            <select (change)="changeSortBy($event.target.value)">
+                <option value="popularity.desc" selected>Popularity Descending</option>
+                <option value="popularity.asc">Popularity Ascending</option>
+                <option value="vote_average.desc">Rating Descending</option>
+                <option value="vote_average.asc">Rating Ascending</option>
+                <option value="first_air_date.desc">Release Date Descending</option>
+                <option value="first_air_date.asc">Release Date Ascending</option>
+            </select>
+        </label>
+    </div>
+    <div class="columns small-12 large-4">
+        <label>Select Year
+            <select (change)="changeYear($event.target.value)">
+                <option value="0" selected>None</option>
+                <option [value]="year" *ngFor="let year of years">{{year}}</option>
+            </select>
+        </label>
+    </div>
+    <div class="columns small-12 large-4">
+        <label>Select Genre
+            <select (change)="changeGenre($event.target.value)">
+                <option value="none" selected>None</option>
+                <option [value]="genre.id" *ngFor="let genre of genres$ | async">{{genre.name}}</option>
+            </select>
+        </label>
+    </div>
+</div>
+<div class="row" *ngIf="loading">Loading...</div>
+<div class="row" [ngClass]="{'invisible': loading}">
+    <div *ngFor="let movie of movies$ | async" class="columns large-3 smaill-12">
+        <movie-card [movie]="movie"></movie-card>
+    </div>
+</div>
+<button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
+<button *ngIf="totalPages >= page * 20" (click)="nextPage()">Next Page</button>
+<div class="row" *ngIf="!loading && totalResults > 0">
+    <div class="column large-6">
+        Currently on page: {{currentPage}} of {{totalPages}} ({{totalResults}} results)
+    </div>
+    <div class="column large-6">
+        <div class="float-right">
+            <a style="padding-right: 10px" (click)="previousPage()"><i *ngIf="currentPage > 1" class="fa fa-arrow-circle-left fa-3x"></i></a>
+            <a (click)="nextPage()"><i *ngIf="currentPage < totalPages" class="fa fa-arrow-circle-right fa-3x"></i></a>
+        </div>
+    </div>
+</div>

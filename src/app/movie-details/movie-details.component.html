@@ -1,0 +1,31 @@
+<header></header>
+<div *ngIf="loading">
+    Loading...
+</div>
+
+<div class="container" *ngIf="!loading && movie">
+    <movie-info [movie]="movie"></movie-info>
+    <div class="column row">
+        <ul class="tabs" data-tabs id="example-tabs">
+            <li class="tabs-title" [ngClass]="{'is-active' : activeTab === 'panel1'}"><a (click)="setActiveTab('panel1')">Top Billed Cast</a></li>
+            <li *ngIf="movieReviews?.length" class="tabs-title" [ngClass]="{'is-active' : activeTab === 'panel2'}"><a (click)="setActiveTab('panel2')">Reviews</a></li>
+        </ul>
+        <div class="tabs-content" data-tabs-content="example-tabs">
+            <div class="tabs-panel" [ngClass]="{'is-active' : activeTab === 'panel1'}" id="panel1">
+                <h4>Top Billed Cast</h4>
+                <div class="row medium-up-3 large-up-5">
+                    <div class="column" *ngFor="let castMember of movieCast | slice: 0: 20; let i=index">
+                        <img src="https://image.tmdb.org/t/p/w138_and_h175_bestv2/{{castMember.profile_path}}">
+                        <h5>{{castMember.name}} / {{castMember.character}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="movieReviews?.length" class="tabs-panel" [ngClass]="{'is-active' : activeTab === 'panel2'}" id="panel2">
+                <h4>Reviews</h4>
+                <div class="media-object stack-for-small" *ngFor="let review of movieReviews">
+                    <movie-review [movieReview]="review"></movie-review>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

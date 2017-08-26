@@ -1,0 +1,14 @@
+.movie-description {
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card {
+    cursor: pointer;
+    outline: none;
+}

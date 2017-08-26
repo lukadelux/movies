@@ -1,0 +1,10 @@
+<!-- Navigation -->
+<header></header>
+<!-- /Navigation -->
+<div class="container">
+    <div class="row">
+        <div *ngFor="let movie of favorites" class="columns large-3 smaill-12">
+            <movie-card [movie]="movie"></movie-card>
+        </div>
+    </div>
+</div>

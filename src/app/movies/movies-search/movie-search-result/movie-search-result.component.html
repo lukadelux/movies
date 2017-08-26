@@ -1,0 +1,12 @@
+<div class="movie-result">
+    <div>
+        <div class="movie-image">
+            <img [src]="movieResult.imageUrl">
+            <div class="no-image-holder"></div>
+        </div>
+    </div>
+    <div class="main-section" [routerLink]="['/movie', movieResult.id]">
+        <h5>{{movieResult.title}}</h5>
+        <p class="movie-description">{{movieResult.description}}</p>
+    </div>
+</div>

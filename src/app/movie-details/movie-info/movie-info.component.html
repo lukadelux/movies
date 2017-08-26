@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="medium-4 columns">
+        <img class="thumbnail" [src]="movie?.imageUrl">
+    </div>
+    <div class="medium-8 columns">
+        <h3>{{movie?.title}} ({{movie?.year}})</h3>
+        <p class="h5" *ngIf="movie?.rating > 0"><i class="fa fa-star"></i> {{movie?.rating}} </p>
+        <p>{{movie?.genresLabel}}</p>
+        <p>{{movie?.description}}</p>
+        <div class="small secondary expanded button-group">
+            <a href="{{movie?.imdbUrl}}" target="_blank" class="button">IMDB</a>
+            <a *ngIf="movie?.movieUrl !== ''" href="{{movie?.movieUrl}}" target="_blank" class="button">Movie Homepage</a>
+        </div>
+        <div class="user-specific" *ngIf="user">
+            <div class="row">
+                <div class="columns medium-6">
+                    <label> Rate movie
+                    <select class="full-width" [(ngModel)]="rate" (change)="rateMovie()">
+                            <option value="null" selected>None</option>
+                            <option [value]="rate" *ngFor="let rate of rates">{{rate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="columns medium-6">
+                    <a style="margin: 24px 0 0;" class="button full-width" *ngIf="!isFavorite" (click)="markAsFavorite(true)">Add To Favorites</a>
+                    <a style="margin: 24px 0 0;" class="button full-width" *ngIf="isFavorite" (click)="markAsFavorite(false)">Remove From Favorites</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

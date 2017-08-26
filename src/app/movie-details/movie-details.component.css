@@ -1,0 +1,7 @@
+ul.tabs li.is-active {
+    background: #e6e6e6;
+}
+
+ul.tabs li:hover {
+    background: #e6e6e6;
+}

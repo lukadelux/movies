@@ -1,0 +1,15 @@
+*:focus {
+    outline: 0;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.container {
+    padding: 20px 0;
+}
