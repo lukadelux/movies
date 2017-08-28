@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login.service';
+
+/* LoginComponent
+--- wraps user login functionality
+ */
 @Component({
     selector: 'login',
     templateUrl: 'login.component.html'

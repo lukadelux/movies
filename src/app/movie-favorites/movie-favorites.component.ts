@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ApiMovieObject, MovieObject } from '../movies.interfaces';
-
+/*
+MovieFavoritesComponent
+--- displays list of logged in user favorited films
+*/
 @Component({
     selector: 'movie-favorites',
     templateUrl: 'movie-favorites.component.html'

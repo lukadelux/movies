@@ -12,6 +12,7 @@ export class ApiService {
 
     constructor(private _http: Http) { }
 
+    // wrapper for http get call which maps results and returns Observable
     observableGetCall(route: string, params: any): Observable<any> {
         params = this._urlEncodeData(params);
         return this._http
@@ -19,6 +20,7 @@ export class ApiService {
             .map((res: Response) => res.json());
     }
 
+    // wrapper for http post call which maps results and returns Observable
     observablePostCall(route: string, params: any, item: any): Observable<any> {
         params = this._urlEncodeData(params);
         return this._http
@@ -26,6 +28,7 @@ export class ApiService {
             .map((res: Response) => res.json());
     }
 
+    // Encodes url parameters
     private _urlEncodeData(data: {}) {
         const dataItems = [];
 

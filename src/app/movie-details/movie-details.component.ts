@@ -5,6 +5,11 @@ import { MovieDetailsService } from './movie-details.service';
 import { ApiSingleMovieObject, MovieInfoObject, MovieReview, MovieCast } from '../movies.interfaces';
 import { each, find, join, flatMap } from 'lodash';
 
+/* MovieDetailsComponent
+-- handles single movie page
+-- incorporates MovieInfo and MovieReview componetns
+-- gets movie from API and prepares it for child components
+*/
 @Component({
     selector: 'movie-details.component.ts',
     templateUrl: 'movie-details.component.html',
@@ -27,9 +32,11 @@ export class MovieDetailsComponent implements OnInit {
 
     ngOnInit() {
         this.movieSubscription = this.route.paramMap
+            // gets movie id from url and gets movie by id from API
             .switchMap((params: ParamMap) =>
                 this._movieDetalisService.getMovie(params.get('id')))
             .filter(data => !!data)
+            // prepares movie for MovieInfoComponent
             .map((apiMovie: ApiSingleMovieObject) => this._prepareMovieInfo(apiMovie))
             .do(data => {
                 console.log('MOVIE DATA', data);
@@ -37,18 +44,19 @@ export class MovieDetailsComponent implements OnInit {
                 this.loading = false;
                 console.log('this.loading', this.loading);
             })
+            // gets movie reviews from API
             .switchMap(data => this._movieDetalisService.getMovieReviews(data.id))
             .map(data => data.results)
             .do(results => this.movieReviews = results)
+            // gets movie credits from API
             .switchMap(_ => this._movieDetalisService.getMovieCredits(this.movie.id))
             .map(data => data.cast)
             .subscribe(results => {
                 this.movieCast = results;
-                console.log('this.movieCast');
-                console.log(this.movieCast);
             });
     }
 
+    // prepares movie for MovieInfoComponent
     private _prepareMovieInfo(apiMovie: ApiSingleMovieObject): MovieInfoObject {
         console.log('apiMovie', apiMovie);
         const movie: MovieInfoObject = {

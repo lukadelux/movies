@@ -17,7 +17,14 @@ import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/zip';
 import 'rxjs/add/operator/take';
-
+/*
+MoviesListComponent
+--- handles list of movies
+--- gets movie list from API using MovieListService
+--- handles movies filtering based on year, genre and sorts movie by popularity or rating
+--- handkles user log in
+--- initializes store and populates it with user sessionId, profile, rated movies and favorite movies
+*/
 @Component({
     selector: 'movies-list',
     templateUrl: 'movies-list.component.html'
@@ -46,23 +53,35 @@ export class MoviesListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // Checking query params based on which user login is done
         this._route.queryParams
+            // returns value only when params.approved and params.request_token are defined
             .filter(params => params.approved && params.request_token)
+            // authenticates user with API
             .switchMap(params => this._loginService.authenticateUser(params.request_token))
+            // stores session in ngrx Store
             .do(data => this._store.dispatch({ type: ADD_SESSION, payload: data.session_id }))
             .map(data => data.session_id)
             .do(sessionId => this.sessionId = sessionId)
+            // gets user profile from API
             .switchMap(sessionId => this._userService.getUserProfile(sessionId))
+            // stores user profile in ngrx Store
             .do(data => this._store.dispatch({ type: ADD_PROFILE, payload: data }))
             .do(data => this.userId = data.id)
+            // gets rated movies from API
             .switchMap(data => this._userService.getRatedMovies(this.sessionId, data.id))
+            // stores rated movies in ngrx Store
             .do(data => this._store.dispatch({ type: 'INIT_RATED_MOVIES', payload: data.results }))
+            // gets user favorite movies from API
             .switchMap(data => this._userService.getFavoriteMovies(this.sessionId, this.userId))
+            // stores user favorite movies in ngrx Store
             .do(data => this._store.dispatch({ type: 'INIT_FAVORITE_MOVIES', payload: data.results }))
             .subscribe(data => console.log('data', data));
 
+        // generate years array used in select year dropdown
         this.years = this._moviesService.generateYears(1900);
 
+        // movies stream, used for populating movies list
         this.movies$ = this._moviesService.movies$
             .do(data => {
                 this.totalPages = data.total_pages;
@@ -73,10 +92,12 @@ export class MoviesListComponent implements OnInit {
             .map((results: ApiMovieObject[]) => results.map(r => this._prepareMovie(r)))
             .do(data => this.loading = false);
 
+        // gets movies from api
         this.genres$ = this._moviesService.genresList$
             .do(data => this.genres = data);
     }
 
+    // changes page
     nextPage() {
         this.loading = true;
         window.scrollTo(0, 0);
@@ -84,6 +105,7 @@ export class MoviesListComponent implements OnInit {
         this._moviesService.changePage(this.currentPage);
     }
 
+    // changes page
     previousPage() {
         this.loading = true;
         window.scrollTo(0, 0);
@@ -91,21 +113,25 @@ export class MoviesListComponent implements OnInit {
         this._moviesService.changePage(this.currentPage);
     }
 
+    // changes genre
     changeGenre(genre: string) {
         this.loading = true;
         this._moviesService.changeGenre(genre !== 'none' ? genre : null);
     }
 
+    // changes year
     changeYear(year: number) {
         this.loading = true;
         this._moviesService.changeYear(year !== 0 ? year : null);
     }
 
+    // changes sort by
     changeSortBy(sortBy: string) {
         this.loading = true;
         this._moviesService.changeSortBy(sortBy);
     }
 
+    // prepares movie object for movie MovieCardComponent
     private _prepareMovie(apiMovie: ApiMovieObject): MovieObject {
         const movie: MovieObject = {
             id: apiMovie.id,

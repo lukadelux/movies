@@ -6,6 +6,11 @@ import { UserService } from '../../shared/user/user.service';
 import { find } from 'lodash';
 import { UPDATE_RATING, ADD_RATED_MOVIES } from '../../shared/user/user-rated-movies.reducer';
 import { ADD_FAVORITE_MOVIE, REMOVE_FAVORITE_MOVIE } from '../../shared/user/user-favorite-movies.reducer';
+/* MovieInfoComponent
+@Input('movie') - movie to display
+--- displays information of the selected movie
+--- handles movie ratings and adding / removing movie from favorites if user is logged in
+*/
 
 @Component({
     selector: 'movie-info',

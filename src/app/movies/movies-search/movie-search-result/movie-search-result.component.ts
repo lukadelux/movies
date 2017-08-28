@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface MovieSearchResult {
     id: number;
@@ -7,6 +7,10 @@ export interface MovieSearchResult {
     imageUrl: string;
 }
 
+/*
+MovieSearchResultComponent
+---presentational component for displaying and linking movie results
+*/
 
 @Component({
     selector: 'movie-search-result',
@@ -14,11 +18,7 @@ export interface MovieSearchResult {
     styleUrls: ['movie-search-result.component.css']
 })
 
-export class MovieSearchResultComponent implements OnInit {
+export class MovieSearchResultComponent {
     @Input() movieResult: MovieSearchResult;
     constructor() { }
-
-    ngOnInit() {
-        console.log('INIT');
-    }
 }

@@ -5,33 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-export interface ApiMovieObject {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    video: boolean;
-    release_date: string;
-    title: string;
-    vote_average: number;
-    vote_count: string;
-};
-
-export interface MovieObject {
-    id: number;
-    title: string;
-    description: string;
-    imageUrl: string;
-    rating: number;
-    genresLabel: string;
-}
-
-
 @Injectable()
 export class MoviesListService {
     private page$: BehaviorSubject<number> = new BehaviorSubject(1);
@@ -48,6 +21,7 @@ export class MoviesListService {
     private previousSortBy: string;
 
     constructor(private _apiService: ApiService) {
+        // movie stream that gets movies from API based on current page, genre, year and sortby properties
         this.movies$ = combineLatest(
             this.page$,
             this.genre$,

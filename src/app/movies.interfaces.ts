@@ -1,3 +1,4 @@
+/* All interfaces used in application */
 export interface ApiMovieObject {
     adult: boolean;
     backdrop_path: string;

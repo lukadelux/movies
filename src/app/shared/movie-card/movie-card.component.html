@@ -3,7 +3,7 @@
     <p class="lead">{{movie.title}}</p>
     <p class="subheader movie-description">{{movie.description}}</p>
 </div> -->
-<div class="card" routerLink="/crisis-center" [routerLink]="['/movie', movie.id]">
+<div class="card" [routerLink]="['/movie', movie.id]">
     <div class="card-divider">
         <h4>{{movie?.title}}</h4>
     </div>

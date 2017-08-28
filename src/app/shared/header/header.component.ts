@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserProfile } from '../user/user-profile.reducer';
 import { UserService } from '../user/user.service';
-
+/*
+HeaderComponent
+--- displays header info troughout the application
+*/
 @Component({
     selector: 'header',
     templateUrl: 'header.component.html',
@@ -18,6 +21,7 @@ export class HeaderComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // Get user profile from store
         this._store.select('userProfile')
             .filter(data => !!data)
             .subscribe((data: UserProfile) => {
@@ -28,6 +32,7 @@ export class HeaderComponent implements OnInit {
                 }
             });
 
+        // Get user favorite movies from store
         this._store.select('userFavoriteMovies')
             .filter(data => !!data)
             .subscribe((data: any) => {
