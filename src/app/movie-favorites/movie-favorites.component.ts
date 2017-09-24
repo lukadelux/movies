@@ -29,7 +29,6 @@ export class MovieFavoritesComponent implements OnInit {
     }
 
     private _prepareMovie(apiMovie: ApiMovieObject): MovieObject {
-        console.log('THIS IS CALLED');
         const movie: MovieObject = {
             id: apiMovie.id,
             title: apiMovie.title,
@@ -39,13 +38,6 @@ export class MovieFavoritesComponent implements OnInit {
             genresLabel: ''
         };
         const genreNames = [];
-        // each(apiMovie.genre_ids, (genreId: number) => {
-        //     const genre = find(this.genres, { id: genreId });
-        //     if (genre) {
-        //         genreNames.push(genre.name);
-        //     }
-        // });
-        // movie.genresLabel = join(genreNames, ', ');
         return movie;
     }
 }

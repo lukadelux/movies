@@ -21,8 +21,4 @@ export class LoginComponent implements OnInit {
             this.requestToken = requestToken;
         });
     }
-
-    logout() {
-
-    }
 }

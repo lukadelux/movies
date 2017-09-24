@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { MovieDetailsService } from './movie-details.service';
@@ -16,7 +16,7 @@ import { each, find, join, flatMap } from 'lodash';
     styleUrls: ['movie-details.component.css']
 })
 
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit, OnDestroy {
     movie: MovieInfoObject;
     movieSubscription;
     loading = <boolean>false;
@@ -78,5 +78,9 @@ export class MovieDetailsComponent implements OnInit {
 
     setActiveTab(activeTab) {
         this.activeTab = activeTab;
+    }
+
+    ngOnDestroy() {
+        this.movieSubscription.unsubscribe();
     }
 }
